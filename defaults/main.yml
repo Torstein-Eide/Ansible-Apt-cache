@@ -1,2 +1,42 @@
 ---
 ansible_managed: This file is managed by Ansible, all changes will be lost.
+
+#General
+mail_domain: example.com
+admin_email: []
+admin_name: []
+
+aptcacher_upstream_proxy: [] #http://www-proxy.example.net:3128
+
+aptcacher_allow_clients:
+aptcacher_bindaddress: 0.0.0.0
+AptCacher_port: 3142
+aptcacher_dir_data: /opt/apt-cacher
+aptcacher_dir_cnf: etc/apt-cacher-ng
+aptcacher_pidfile: /var/run/apt-cacher-ng/pid
+aptcacher_ReportPage: true #true or false
+aptCacher_days_to_old: 31
+aptCacher_cache_size: 200G
+aptCacher_ForceManaged: false #true or false
+aptCacher_
+aptCacher_
+aptCacher_
+aptCacher_
+aptCacher_precachefor:
+ - debrep/dists/unstable/*/source/Sources*
+ - debrep/dists/unstable/*/binary-amd64/Packages*
+ - uburep/dists/bionic*
+ - secdeb/dists/stretch/*
+ - debrep/dists/stretch/*
+
+aptcacher_Remap:
+  - "Remap-debrep: file:deb_mirror*.gz /debian ; file:backends_debian" # Debian Archives
+  - "Remap-uburep: file:ubuntu_mirrors /ubuntu ; file:backends_ubuntu" # Ubuntu Archives
+  #- "Remap-cygwin: file:cygwin_mirrors /cygwin" # ; file:backends_cygwin # incomplete, please create this file or specify preferred mirrors here
+  - "Remap-sfnet:  file:sfnet_mirrors" # ; file:backends_sfnet # incomplete, please create this file or specify preferred mirrors here
+  - "Remap-alxrep: file:archlx_mirrors /archlinux" # ; file:backend_archlx # Arch Linux
+  - "Remap-fedora: file:fedora_mirrors" # Fedora Linux
+  - "Remap-epel:   file:epel_mirrors" # Fedora EPEL
+  - "Remap-slrep:  file:sl_mirrors" # Scientific Linux
+  - "Remap-gentoo: file:gentoo_mirrors.gz /gentoo ; file:backends_gentoo" # Gentoo Archives
+  - "Remap-secdeb: security.debian.org"

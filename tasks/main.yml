@@ -6,8 +6,8 @@
    state: present
 
 - name: Creates directory
-  file: 
-   path: /DATA/@aptcache
+  file:
+   path: "{{ aptcacher_dir_data }}"
    state: directory
    owner: apt-cacher-ng
    group: apt-cacher-ng
@@ -15,53 +15,52 @@
 
 - name: Controlling acng.conf for PassThroughPattern
   lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
+   path: "{{aptcacher_dir_cnf}}/acng.conf"
    regexp: '^PassThroughPattern:'
    line: 'PassThroughPattern: .*'
    backup: yes
   notify:
    - restart apt-cacher-ng
-   
-   
+  when: not
+
 - name: Controlling acng.conf for CacheDir
   lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
+   path:
    regexp: '^CacheDir:'
-   line: 'CacheDir: /DATA/@aptcache' 
+   line: 'CacheDir: {{ aptcacher_dir_data }}'
    backup: yes
   notify:
    - restart apt-cacher-ng
 
 - name: Controlling acng.conf for BindAddress
   lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
+   path: "{{aptcacher_dir_cnf}}/acng.conf"
    regexp: '^BindAddress:'
-   line: 'BindAddress: 0.0.0.0' 
+   line: 'BindAddress: {{aptcacher_bindaddress}}'
    backup: yes
   notify:
    - restart apt-cache-ng
-   
+
 - name: Controlling acng.conf for ReportPage
   lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
+   path: "{{aptcacher_dir_cnf}}/acng.conf"
    regexp: '^ReportPage:'
    line: 'ReportPage: acng-report.html'
    backup: yes
   notify:
    - restart apt-cacher-ng
-   
+  when:  aptcacher_ReportPage == true
+
 - name: Controlling acng.conf for PidFile
   lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
+   path: "{{aptcacher_dir_cnf}}/acng.conf"
    regexp: '^PidFile:'
    line: 'PidFile: /var/run/apt-cacher-ng/pid'
    backup: yes
-    
   notify:
    - restart apt-cacher-ng
+
 - name: ensure apt-cacher-ng is running
   service:
    name: apt-cacher-ng
    state: started
-
-    
