@@ -1,0 +1,117 @@
+# {{ ansible_managed }}
+
+LogDir: {{ aptcacher_log_dir }}
+SupportDir: {{ aptCacher_SupportDir }}
+{% for LocalDirs in aptCacher_LocalDirs %}
+LocalDirs: {{ LocalDirs }}{% endfor %}
+
+port: {{aptcacher_port}}
+
+{% if (aptcacher_bindaddress) and (aptcacher_bindaddress != '0.0.0.0') %}
+BindAddress: {{aptcacher_bindaddress}}
+{% endif %}
+{% if (aptcacher_upstream_proxy) %}
+Proxy: {{aptcacher_upstream_proxy}} {% endif %}
+{% if aptCacher_SocketPath %} SocketPath: {{ aptCacher_SocketPath }}{% endif %}
+
+CacheDir: {{ aptcacher_dir_data}}
+DirPerms: {{ aptCacher_DirPerms }} 
+FilePerms: {{ aptCacher_FilePerms }}
+
+{% for remap in aptcacher_Remap %}
+{{ remap }} 
+{% endfor %}
+{% if aptCacher_precachefor %}
+PrecacheFor: {{ ' '.join(aptCacher_precachefor) }}{% endif %}
+
+{% if (aptcacher_ReportPage == true) %}
+ReportPage: acng-report.html 
+{% endif %}
+{% if (aptCacher_UnbufferLogs == true) %}
+UnbufferLogs: 1 {% endif %}
+{% if (aptCacher_VerboseLog == false) %}
+VerboseLog: 0 {% endif %}
+{% if (aptCacher_ForeGround == true) %}
+ForeGround: 1 {% endif %}
+PidFile: {{ aptcacher_pidfile }}
+{% if (aptCacher_Offlinemode == true) %}
+    Offlinemode: 1 {% endif %}
+ExThreshold: {{aptCacher_days_to_old}}
+ExStartTradeOff: {{aptCacher_cache_size}}
+{% if (aptCacher_ExAbortOnProblems == false) %}
+ExAbortOnProblems: 0 {% endif %}
+{% if (aptCacher_ExSuppressAdminNotification == false) %}
+ExSuppressAdminNotification: 0 {% endif %}
+{% if (aptCacher_StupidFs == true) %} StupidFs: 1 {% endif %}
+{% if (aptCacher_ForwardBtsSoap == false) %}ForwardBtsSoap: 0 {% endif %}
+DnsCacheSeconds: {{ aptCacher_DnsCacheSeconds }} 
+{% if (aptCacher_ForceManaged == True)  %}ForceManaged: 1 {% endif %}
+
+MaxStandbyConThreads: {{ aptCacher_MaxStandbyConThreads }} 
+MaxConThreads: {{ aptCacher_MaxConThreads }} 
+
+{% if aptCacher_PfilePatternEx %}
+PfilePatternEx:{{ aptCacher_PfilePatternEx }}{% endif %}
+{% if aptCacher_VfilePatternEx %}
+VfilePatternEx:{{ aptCacher_VfilePatternEx }}{% endif %}
+{% if aptCacher_SPfilePatternEx %}
+SPfilePatternEx:{{ aptCacher_SPfilePatternEx }}{% endif %}
+{% if aptCacher_SVfilePatternEx %}
+SVfilePatternEx:{{ aptCacher_SVfilePatternEx }}{% endif %}
+{% if aptCacher_WfilePatternEx %}
+WfilePatternEx:{{ aptCacher_WfilePatternEx }}{% endif %}
+{% if (aptCacher_Debug >= 1) %}
+Debug: {{ aptCacher_Debug }} {% endif %}
+{% if (aptCacher_ExposeOrigin == true) %}
+ExposeOrigin: 1 {% endif %}
+{% if (aptCacher_LogSubmittedOrigin == true) %}
+LogSubmittedOrigin: 1 {% endif %}
+{% if aptCacher_UserAgent %}
+UserAgent: {{ aptCacher_UserAgent }} {% endif %}
+{% if (aptCacher_RecompBz2 == true) %}
+RecompBz2: 1 {% endif %}
+NetworkTimeout: {{ aptCacher_NetworkTimeout }} 
+{% if aptCacher_DontCacheRequested %}
+DontCacheRequested: {{ aptCacher_DontCacheRequested }} {% endif %}
+{% if  aptCacher_DontCacheResolved  %}
+DontCacheResolved: {{ aptCacher_DontCacheResolved }}{% endif %}
+{% if aptCacher_DontCache %}
+DontCache: {{ aptCacher_DontCache }}{% endif %}
+{% if  aptCacher_RequestAppendix %}
+RequestAppendix: {{ aptCacher_RequestAppendix }}{% endif %}
+ConnectProto: {{ aptCacher_ConnectProto }} 
+{% if ( aptCacher_KeepExtraVersions == true) %}
+KeepExtraVersions:  1{% endif %}
+{% if ( aptCacher_UseWrap  == true) %}
+UseWrap: 1{% endif %}
+FreshIndexMaxAge: {{ aptCacher_FreshIndexMaxAge }}
+RedirMax: {{ aptCacher_RedirMax }}
+{% if (aptCacher_VfileUseRangeOps  == false) %}
+VfileUseRangeOps:  0{% endif %}
+PassThroughPattern: {{ aptCacher_PassThroughPattern }}
+ResponseFreezeDetectTime: {{ aptCacher_ResponseFreezeDetectTime }} #  500
+{% if (aptCacher_ReuseConnections == false) %}
+ReuseConnections:  0{% endif %}
+PipelineDepth: {{ aptCacher_PipelineDepth }}
+{% if aptCacher_CApath %}
+CApath: {{ aptCacher_CApath }}{% endif %}
+{% if aptCacher_CAfile %}
+CAfile: {{ aptCacher_CAfile }}{% endif %}
+{% if aptCacher_OptProxyCheckCommand %}
+OptProxyCheckCommand: {{ aptCacher_OptProxyCheckCommand }}{% endif %}
+{% if aptCacher_OptProxyCheckInterval %}
+OptProxyCheckInterval: {{ aptCacher_OptProxyCheckInterval }}{% endif %}
+{% if aptCacher_OptProxyTimeout %}
+OptProxyTimeout: {{ aptCacher_OptProxyTimeout }}{% endif %}
+{% if aptCacher_MaxDlSpeed  %}
+MaxDlSpeed: {{ aptCacher_MaxDlSpeed }}{% endif %}
+{% if aptCacher_MaxInresponsiveDlSize %}
+MaxInresponsiveDlSize: {{ aptCacher_MaxInresponsiveDlSize }}{% endif %}
+{% if aptCacher_BadRedirDetectMime %}
+BadRedirDetectMime: {{ aptCacher_BadRedirDetectMime }}{% endif %}
+{% if  aptCacher_BusAction  %}
+BusAction: {{ aptCacher_BusAction }}{% endif %}
+{% if ( aptCacher_NoSSLChecks == true) %}
+NoSSLChecks:  1{% endif %}
+{% if ( aptCacher_TrackFileUse == true) %}
+TrackFileUse:  1{% endif %}

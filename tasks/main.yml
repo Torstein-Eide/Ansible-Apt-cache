@@ -1,67 +1,37 @@
--
+---
 
-- name: apt-cacher-ng tilstede
+- name: apt-cacher-ng present
   apt:
-   name: ['apt-cacher-ng','avahi-daemon']
-   state: present
+    name: ["apt-cacher-ng", "avahi-daemon", "auto-apt-proxy"]
+    state: present
 
-- name: Creates directory
-  file: 
-   path: /DATA/@aptcache
-   state: directory
-   owner: apt-cacher-ng
-   group: apt-cacher-ng
-   mode: 0755
 
-- name: Controlling acng.conf for PassThroughPattern
-  lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
-   regexp: '^PassThroughPattern:'
-   line: 'PassThroughPattern: .*'
-   backup: yes
-  notify:
-   - restart apt-cacher-ng
-   
-   
-- name: Controlling acng.conf for CacheDir
-  lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
-   regexp: '^CacheDir:'
-   line: 'CacheDir: /DATA/@aptcache' 
-   backup: yes
-  notify:
-   - restart apt-cacher-ng
+- name: Creates data directory
+  file:
+    path: "{{ aptcacher_dir_data }}"
+    state: directory
+    owner: apt-cacher-ng
+    group: apt-cacher-ng
+    mode: 0755
+    recurse: True
 
-- name: Controlling acng.conf for BindAddress
-  lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
-   regexp: '^BindAddress:'
-   line: 'BindAddress: 0.0.0.0' 
-   backup: yes
-  notify:
-   - restart apt-cache-ng
-   
-- name: Controlling acng.conf for ReportPage
-  lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
-   regexp: '^ReportPage:'
-   line: 'ReportPage: acng-report.html'
-   backup: yes
-  notify:
-   - restart apt-cacher-ng
-   
-- name: Controlling acng.conf for PidFile
-  lineinfile:
-   path: /etc/apt-cacher-ng/acng.conf
-   regexp: '^PidFile:'
-   line: 'PidFile: /var/run/apt-cacher-ng/pid'
-   backup: yes
+- name: copy mirror files
+  copy:
+    dest: "{{aptcacher_dir_cnf}}"
+    src:  "{{ item }}"
+  loop: "{{ aptCacher_mirrorfiles }}" 
     
+- name: Configurasion template 
+  template:
+    src:  acng.conf.j2
+    dest:  "{{ aptcacher_dir_cnf }}/acng.conf" 
+    mode:  0644
+    owner:  root
+    group:  root 
   notify:
    - restart apt-cacher-ng
+
 - name: ensure apt-cacher-ng is running
   service:
-   name: apt-cacher-ng
-   state: started
-
-    
+    name: apt-cacher-ng
+    state: started

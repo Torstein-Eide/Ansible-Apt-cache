@@ -1,2 +1,108 @@
 ---
 ansible_managed: This file is managed by Ansible, all changes will be lost.
+
+#General
+mail_domain: example.com
+admin_email: []
+admin_name: []
+
+aptcacher_upstream_proxy: [] #http://www-proxy.example.net:3128
+aptcacher_log_dir: "/var/log/apt-cacher-ng"
+
+aptcacher_allow_clients:
+aptcacher_bindaddress: 0.0.0.0
+aptcacher_port: 3142
+aptcacher_dir_data: /opt/apt-cacher
+aptcacher_dir_cnf: /etc/apt-cacher-ng
+aptcacher_pidfile: /var/run/apt-cacher-ng/pid
+aptCacher_Debug: 0
+
+aptCacher_mirrorfiles:
+  - raspbian_mirrors
+
+aptcacher_Remap:
+  - "Remap-debrep: file:deb_mirror*.gz /debian ; file:backends_debian" # Debian Archives
+  - "Remap-uburep: file:ubuntu_mirrors /ubuntu ; file:backends_ubuntu" # Ubuntu Archives
+  #- "Remap-cygwin: file:cygwin_mirrors /cygwin" # ; file:backends_cygwin # incomplete, please create this file or specify preferred mirrors here
+  - "Remap-sfnet:  file:sfnet_mirrors" # ; file:backends_sfnet # incomplete, please create this file or specify preferred mirrors here
+  - "Remap-alxrep: file:archlx_mirrors /archlinux" # ; file:backend_archlx # Arch Linux
+  - "Remap-fedora: file:fedora_mirrors" # Fedora Linux
+  - "Remap-epel:   file:epel_mirrors" # Fedora EPEL
+  - "Remap-slrep:  file:sl_mirrors" # Scientific Linux
+  - "Remap-gentoo: file:gentoo_mirrors.gz /gentoo ; file:backends_gentoo" # Gentoo Archives
+  - "Remap-secdeb: security.debian.org"
+  - "Remap-raspbian: file:raspbian_mirrors /raspian; raspbian.trivini.no"
+
+
+aptcacher_ReportPage: true #true or false
+aptCacher_days_to_old: 31
+aptCacher_cache_size: 500m
+aptCacher_ForceManaged: False #true or false
+
+aptCacher_precachefor:
+ - debrep/dists/unstable/*/binary-amd64/Packages
+ - "{uburep,secdeb,debrep}/*/*{Packages,InRelease,Packages.xz,Translation,Commands}*"
+
+aptCacher_LocalDirs:
+ - acng-doc /usr/share/doc/apt-cacher-ng
+aptCacher_DirPerms: "00755"
+aptCacher_FilePerms: "00664"
+
+aptCacher_SupportDir: "/usr/lib/apt-cacher-ng"
+
+aptCacher_SocketPath: []
+aptCacher_UnbufferLogs: false
+
+aptCacher_VerboseLog: true
+
+aptCacher_DnsCacheSeconds: 1800 
+aptCacher_MaxStandbyConThreads: 8
+aptCacher_MaxConThreads: "-1"
+aptCacher_NetworkTimeout: 60
+aptCacher_ConnectProto: "v4 v6"
+aptCacher_FreshIndexMaxAge: 27
+aptCacher_AllowUserPorts: 
+  - 80
+aptCacher_RedirMax: 5
+aptCacher_PipelineDepth: 10
+aptCacher_ResponseFreezeDetectTime: 500
+aptCacher_ForeGround: False
+aptCacher_Offlinemode: False
+aptCacher_ExAbortOnProblems: True
+aptCacher_ExSuppressAdminNotification: True
+aptCacher_StupidFs: False
+aptCacher_ForwardBtsSoap: True
+
+aptCacher_PfilePatternEx: []
+aptCacher_VfilePatternEx: []
+aptCacher_SPfilePatternEx: []
+aptCacher_SVfilePatternEx: []
+aptCacher_WfilePatternEx: []
+aptCacher_ExposeOrigin: False
+aptCacher_LogSubmittedOrigin: False
+aptCacher_RecompBz2: False
+aptCacher_UserAgent: []
+aptCacher_DontCacheRequested: []
+aptCacher_DontCacheResolved: []
+aptCacher_DontCache: []
+aptCacher_RequestAppendix: []
+
+aptCacher_KeepExtraVersions: []
+aptCacher_UseWrap: []
+aptCacher_VfileUseRangeOps: True
+aptCacher_PassThroughPattern: '^(bugs\.debian\.org|changelogs\.ubuntu\.com):443$'
+aptCacher_ReuseConnections: True
+aptCacher_CApath: []
+aptCacher_CAfile: []
+
+aptCacher_OptProxyCheckCommand: []
+aptCacher_OptProxyCheckInterval: []
+aptCacher_OptProxyTimeout: []
+
+aptCacher_MaxDlSpeed: []
+
+aptCacher_MaxInresponsiveDlSize: []
+aptCacher_BadRedirDetectMime: []
+aptCacher_BusAction: []
+aptCacher_NoSSLChecks: False
+aptCacher_TrackFileUse: False
