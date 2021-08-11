@@ -5,7 +5,7 @@ Ansible role to setup and host a apt-cache-ng proxy server, for apt requestes.
 There are no external dependencies.
 
 ## Role Variables
-For now, pleae refer to the variables documented in [defaults/main.yml](../defaults/main.yml).
+For now, pleae refer to the variables documented in [defaults/main.yml](defaults/main.yml).
 
 ## Dependencies
 There are no dependencies on other roles.
